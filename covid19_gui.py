@@ -1,6 +1,7 @@
 import dotenv
 import os
 import requests
+import streamlit as st
 
 _ = dotenv.load_dotenv()
 DC_USER = os.getenv('DC_USER')
@@ -18,4 +19,7 @@ DC_DOC = "https://www.documentcloud.org/documents/20793561-leopold-nih-foia-anth
 search_endpoint = f"{DC_API}/oembed?url={DC_DOC}" 
 headers = {'Authorization': f'Bearer {access_token}'}
 response = requests.get(search_endpoint, headers=headers)
-print(response.json()['html'])
+pdf_viewer=response.json()['html']
+
+st.write("# DocmentCloud PDF Viewer")
+st.markdown(pdf_viewer, unsafe_allow_html=True)
